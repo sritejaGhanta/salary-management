@@ -9,6 +9,10 @@
     "lint": "turbo run lint"
   },
   "devDependencies": {
+    "@types/node": "^25.9.1",
     "turbo": "latest"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2"
   }
 }

@@ -1,7 +1,42 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class CreateTables001 implements MigrationInterface {
+export class CreateTables1748476800000 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
+
+    // 1. countries table
+    await queryRunner.query(`
+      CREATE TABLE countries (
+        id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+        country VARCHAR(255) NOT NULL,
+        countryCode CHAR(3) NOT NULL,
+        countryCodeISO3 CHAR(50) DEFAULT NULL,
+        countryFlag VARCHAR(255) DEFAULT NULL,
+        dialCode VARCHAR(10) DEFAULT NULL,
+        defaultTimezoneId INT DEFAULT NULL,
+        description TEXT,
+        currency VARCHAR(10) DEFAULT NULL,
+        status ENUM('Active','Inactive') DEFAULT NULL,
+        createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        updatedAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        PRIMARY KEY (id)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3
+    `);
+
+    // 2. states table
+    await queryRunner.query(`
+      CREATE TABLE states (
+        id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+        state VARCHAR(255) NOT NULL,
+        stateCode VARCHAR(20) NOT NULL,
+        countryId INT DEFAULT NULL,
+        status ENUM('Active','Inactive') DEFAULT NULL,
+        createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        updatedAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        PRIMARY KEY (id)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3
+    `);
+
+    // 3. departments table
     await queryRunner.query(`
       CREATE TABLE departments (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -10,6 +45,7 @@ export class CreateTables001 implements MigrationInterface {
       )
     `);
 
+    // 4. job_titles table
     await queryRunner.query(`
       CREATE TABLE job_titles (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -18,6 +54,7 @@ export class CreateTables001 implements MigrationInterface {
       )
     `);
 
+    // 5. hr_managers table
     await queryRunner.query(`
       CREATE TABLE hr_managers (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -31,6 +68,7 @@ export class CreateTables001 implements MigrationInterface {
       )
     `);
 
+    // 6. employees table
     await queryRunner.query(`
       CREATE TABLE employees (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -57,6 +95,7 @@ export class CreateTables001 implements MigrationInterface {
       )
     `);
 
+    // 7. salary_history table
     await queryRunner.query(`
       CREATE TABLE salary_history (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -70,6 +109,7 @@ export class CreateTables001 implements MigrationInterface {
       )
     `);
 
+    // 8. audit_logs table
     await queryRunner.query(`
       CREATE TABLE audit_logs (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -85,6 +125,7 @@ export class CreateTables001 implements MigrationInterface {
       )
     `);
 
+    // Indexes
     await queryRunner.query(`CREATE INDEX idx_employees_country ON employees(country_id)`);
     await queryRunner.query(`CREATE INDEX idx_employees_job_title ON employees(job_title_id)`);
     await queryRunner.query(`CREATE INDEX idx_employees_department ON employees(department_id)`);
@@ -96,11 +137,15 @@ export class CreateTables001 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`SET foreign_key_checks = 0`);
     await queryRunner.query(`DROP TABLE IF EXISTS audit_logs`);
     await queryRunner.query(`DROP TABLE IF EXISTS salary_history`);
     await queryRunner.query(`DROP TABLE IF EXISTS employees`);
     await queryRunner.query(`DROP TABLE IF EXISTS hr_managers`);
     await queryRunner.query(`DROP TABLE IF EXISTS job_titles`);
     await queryRunner.query(`DROP TABLE IF EXISTS departments`);
+    await queryRunner.query(`DROP TABLE IF EXISTS states`);
+    await queryRunner.query(`DROP TABLE IF EXISTS countries`);
+    await queryRunner.query(`SET foreign_key_checks = 1`);
   }
 }
