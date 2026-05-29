@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { AuditModule } from './audit/audit.module';
 import { EmployeesModule } from './employees/employees.module';
 import { InsightsModule } from './insights/insights.module';
+import { ExportModule } from './export/export.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { InsightsModule } from './insights/insights.module';
     AuditModule,
     EmployeesModule,
     InsightsModule,
+    ExportModule,
   ],
   controllers: [AppController],
   providers: [AppService],
