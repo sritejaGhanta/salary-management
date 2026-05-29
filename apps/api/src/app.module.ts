@@ -3,7 +3,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
+import { BullModule } from '@nestjs/bull';
 import { AuthModule } from './auth/auth.module';
+import { AuditModule } from './audit/audit.module';
+import { EmployeesModule } from './employees/employees.module';
 
 @Module({
   imports: [
@@ -24,7 +27,15 @@ import { AuthModule } from './auth/auth.module';
         logging: true,
       }),
     }),
+    BullModule.forRoot({
+      redis: {
+        host: process.env.REDIS_HOST || 'localhost',
+        port: parseInt(process.env.REDIS_PORT || '6379', 10),
+      },
+    }),
     AuthModule,
+    AuditModule,
+    EmployeesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
