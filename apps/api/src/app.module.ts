@@ -7,6 +7,7 @@ import { BullModule } from '@nestjs/bull';
 import { AuthModule } from './auth/auth.module';
 import { AuditModule } from './audit/audit.module';
 import { EmployeesModule } from './employees/employees.module';
+import { InsightsModule } from './insights/insights.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { EmployeesModule } from './employees/employees.module';
     AuthModule,
     AuditModule,
     EmployeesModule,
+    InsightsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
