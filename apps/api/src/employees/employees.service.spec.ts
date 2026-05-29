@@ -6,6 +6,10 @@ import { NotFoundException } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
 import { Employee } from '../entities/employee.entity';
 import { SalaryHistory } from '../entities/salary-history.entity';
+import { Country } from '../entities/country.entity';
+import { State } from '../entities/state.entity';
+import { Department } from '../entities/department.entity';
+import { JobTitle } from '../entities/job-title.entity';
 
 describe('EmployeesService', () => {
   let service: EmployeesService;
@@ -32,6 +36,23 @@ describe('EmployeesService', () => {
   const mockSalaryHistoryRepository = {
     create: jest.fn(),
     save: jest.fn(),
+    find: jest.fn(),
+  };
+
+  const mockCountryRepository = {
+    find: jest.fn(),
+  };
+
+  const mockStateRepository = {
+    find: jest.fn(),
+  };
+
+  const mockDepartmentRepository = {
+    find: jest.fn(),
+  };
+
+  const mockJobTitleRepository = {
+    find: jest.fn(),
   };
 
   const mockAuditQueue = {
@@ -49,6 +70,22 @@ describe('EmployeesService', () => {
         {
           provide: getRepositoryToken(SalaryHistory),
           useValue: mockSalaryHistoryRepository,
+        },
+        {
+          provide: getRepositoryToken(Country),
+          useValue: mockCountryRepository,
+        },
+        {
+          provide: getRepositoryToken(State),
+          useValue: mockStateRepository,
+        },
+        {
+          provide: getRepositoryToken(Department),
+          useValue: mockDepartmentRepository,
+        },
+        {
+          provide: getRepositoryToken(JobTitle),
+          useValue: mockJobTitleRepository,
         },
         {
           provide: getQueueToken('audit'),
@@ -273,6 +310,51 @@ describe('EmployeesService', () => {
         entity_id: 5,
         ip_address: '10.0.0.1',
       }));
+    });
+  });
+
+  describe('metadata', () => {
+    it('should retrieve countries', async () => {
+      mockCountryRepository.find.mockResolvedValue([{ id: 1, country: 'USA' }]);
+      const res = await service.getCountries();
+      expect(res).toEqual([{ id: 1, country: 'USA' }]);
+      expect(mockCountryRepository.find).toHaveBeenCalledWith({ order: { country: 'ASC' } });
+    });
+
+    it('should retrieve states filtered by countryId', async () => {
+      mockStateRepository.find.mockResolvedValue([{ id: 2, state: 'New York', countryId: 1 }]);
+      const res = await service.getStates(1);
+      expect(res).toEqual([{ id: 2, state: 'New York', countryId: 1 }]);
+      expect(mockStateRepository.find).toHaveBeenCalledWith({
+        where: { countryId: 1 },
+        order: { state: 'ASC' },
+      });
+    });
+
+    it('should retrieve departments', async () => {
+      mockDepartmentRepository.find.mockResolvedValue([{ id: 3, name: 'HR' }]);
+      const res = await service.getDepartments();
+      expect(res).toEqual([{ id: 3, name: 'HR' }]);
+      expect(mockDepartmentRepository.find).toHaveBeenCalledWith({ order: { name: 'ASC' } });
+    });
+
+    it('should retrieve job titles', async () => {
+      mockJobTitleRepository.find.mockResolvedValue([{ id: 4, title: 'Engineer' }]);
+      const res = await service.getJobTitles();
+      expect(res).toEqual([{ id: 4, title: 'Engineer' }]);
+      expect(mockJobTitleRepository.find).toHaveBeenCalledWith({ order: { title: 'ASC' } });
+    });
+
+    it('should retrieve salary history for an employee', async () => {
+      const mockHistory = [{ id: 1, old_salary: 100, new_salary: 200, changedBy: { id: 2, password: 'hash' } }];
+      mockSalaryHistoryRepository.find.mockResolvedValue(mockHistory);
+      const res = await service.getSalaryHistory(5);
+      expect(res).toEqual([{ id: 1, old_salary: 100, new_salary: 200, changedBy: { id: 2 } }]);
+      expect(mockSalaryHistoryRepository.find).toHaveBeenCalledWith({
+        where: { employee_id: 5 },
+        relations: { changedBy: true },
+        order: { changed_at: 'DESC' },
+      });
     });
   });
 });
