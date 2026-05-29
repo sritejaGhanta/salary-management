@@ -8,6 +8,10 @@ import { SalaryHistory } from '../entities/salary-history.entity';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { EmployeeQueryDto } from './dto/employee-query.dto';
+import { Country } from '../entities/country.entity';
+import { State } from '../entities/state.entity';
+import { Department } from '../entities/department.entity';
+import { JobTitle } from '../entities/job-title.entity';
 
 @Injectable()
 export class EmployeesService {
@@ -16,6 +20,14 @@ export class EmployeesService {
     private readonly employeeRepository: Repository<Employee>,
     @InjectRepository(SalaryHistory)
     private readonly salaryHistoryRepository: Repository<SalaryHistory>,
+    @InjectRepository(Country)
+    private readonly countryRepository: Repository<Country>,
+    @InjectRepository(State)
+    private readonly stateRepository: Repository<State>,
+    @InjectRepository(Department)
+    private readonly departmentRepository: Repository<Department>,
+    @InjectRepository(JobTitle)
+    private readonly jobTitleRepository: Repository<JobTitle>,
     @InjectQueue('audit')
     private readonly auditQueue: Bull.Queue,
   ) {}
@@ -207,5 +219,38 @@ export class EmployeesService {
     });
 
     return { message: 'Employee deleted successfully' };
+  }
+
+  async getCountries() {
+    return this.countryRepository.find({ order: { country: 'ASC' } });
+  }
+
+  async getStates(countryId: number) {
+    return this.stateRepository.find({
+      where: { countryId },
+      order: { state: 'ASC' },
+    });
+  }
+
+  async getDepartments() {
+    return this.departmentRepository.find({ order: { name: 'ASC' } });
+  }
+
+  async getJobTitles() {
+    return this.jobTitleRepository.find({ order: { title: 'ASC' } });
+  }
+
+  async getSalaryHistory(employeeId: number) {
+    const history = await this.salaryHistoryRepository.find({
+      where: { employee_id: employeeId },
+      relations: { changedBy: true },
+      order: { changed_at: 'DESC' },
+    });
+    history.forEach((h) => {
+      if (h.changedBy) {
+        delete (h.changedBy as any).password;
+      }
+    });
+    return history;
   }
 }
