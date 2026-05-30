@@ -63,11 +63,24 @@ export default function ViewEmployeePage() {
   }, [id]);
 
   const formatCurrency = (amount: number, currency = 'USD') => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency,
-      maximumFractionDigits: 0,
-    }).format(amount);
+    try {
+      const code = (currency && currency.trim().length === 3) ? currency.trim().toUpperCase() : 'USD';
+      return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: code,
+        maximumFractionDigits: 0,
+      }).format(amount);
+    } catch {
+      try {
+        return new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: 'USD',
+          maximumFractionDigits: 0,
+        }).format(amount);
+      } catch {
+        return `$${amount.toLocaleString('en-US')}`;
+      }
+    }
   };
 
   const formatDate = (dateStr: string) => {

@@ -15,10 +15,10 @@ Route (app)                              Size     First Load JS
 ┌ ○ /                                    2.09 kB         112 kB
 ├ ○ /_not-found                          871 B          88.2 kB
 ├ ○ /dashboard                           2.96 kB         123 kB
-├ ○ /employees                           5.97 kB         126 kB
-├ ƒ /employees/[id]                      3.89 kB         124 kB
-├ ƒ /employees/[id]/edit                 1.9 kB          154 kB
-├ ○ /employees/new                       790 B           153 kB
+├ ○ /employees                           6.03 kB         126 kB
+├ ƒ /employees/[id]                      3.94 kB         124 kB
+├ ƒ /employees/[id]/edit                 1.96 kB         155 kB
+├ ○ /employees/new                       790 B           154 kB
 ├ ○ /export                              3.38 kB         114 kB
 ├ ○ /insights                            110 kB          220 kB
 ├ ○ /login                               3.56 kB         143 kB
