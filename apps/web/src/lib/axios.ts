@@ -19,7 +19,11 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401 && typeof window !== 'undefined' && window.location.pathname !== '/login') {
+    if (
+      (error.response?.status === 401 || error.response?.status === 403) &&
+      typeof window !== 'undefined' &&
+      window.location.pathname !== '/login'
+    ) {
       localStorage.removeItem('token');
       document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
       window.location.href = '/login';

@@ -9,6 +9,7 @@ import { AuditModule } from './audit/audit.module';
 import { EmployeesModule } from './employees/employees.module';
 import { InsightsModule } from './insights/insights.module';
 import { ExportModule } from './export/export.module';
+import { HRManagersModule } from './hr-managers/hr-managers.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { ExportModule } from './export/export.module';
     EmployeesModule,
     InsightsModule,
     ExportModule,
+    HRManagersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
