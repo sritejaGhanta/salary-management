@@ -296,16 +296,16 @@ export default function AuditLogsPage() {
 
       {/* Logs Table */}
       <div className="bg-[#161820]/80 border border-gray-800 backdrop-blur-xl rounded-2xl overflow-hidden shadow-xl">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
+        <div className="overflow-x-auto w-full scrollbar-thin">
+          <table className="w-full text-left border-collapse min-w-[600px] md:min-w-full">
             <thead>
               <tr className="border-b border-gray-800 text-xs font-semibold text-gray-400 bg-[#0d0e12]/30 uppercase tracking-wider">
-                <th className="py-4 px-6">Log ID</th>
+                <th className="py-4 px-6 hidden md:table-cell">Log ID</th>
                 <th className="py-4 px-6">HR Manager</th>
                 <th className="py-4 px-6">Action</th>
                 <th className="py-4 px-6">Entity Target</th>
-                <th className="py-4 px-6">Entity ID</th>
-                <th className="py-4 px-6">IP Address</th>
+                <th className="py-4 px-6 hidden md:table-cell">Entity ID</th>
+                <th className="py-4 px-6 hidden md:table-cell">IP Address</th>
                 <th className="py-4 px-6">Created At</th>
               </tr>
             </thead>
@@ -327,33 +327,33 @@ export default function AuditLogsPage() {
                 </tr>
               ) : (
                 logs.map((log) => (
-                  <tr key={log.id} className="hover:bg-gray-800/20 transition">
-                    <td className="py-4 px-6 font-semibold text-white">#{log.id}</td>
+                  <tr key={log.id} className="hover:bg-gray-800/20 transition animate-fade-in text-xs">
+                    <td className="py-4 px-6 font-semibold text-white hidden md:table-cell">#{log.id}</td>
                     <td className="py-4 px-6">
                       {log.hrManager ? (
                         <div className="flex flex-col">
                           <span className="font-medium text-white">{log.hrManager.full_name}</span>
-                          <span className="text-xs text-gray-500">{log.hrManager.email}</span>
+                          <span className="text-[10px] text-gray-500">{log.hrManager.email}</span>
                         </div>
                       ) : (
                         <span className="text-gray-500">System / Deleted User</span>
                       )}
                     </td>
                     <td className="py-4 px-6">
-                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold border ${getActionBadgeColor(log.action)}`}>
+                      <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold border ${getActionBadgeColor(log.action)}`}>
                         {log.action}
                       </span>
                     </td>
                     <td className="py-4 px-6">
-                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold border ${getEntityBadgeColor(log.entity)}`}>
+                      <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold border ${getEntityBadgeColor(log.entity)}`}>
                         {log.entity}
                       </span>
                     </td>
-                    <td className="py-4 px-6 font-mono text-xs">ID: {log.entity_id}</td>
-                    <td className="py-4 px-6 font-mono text-xs text-gray-400">
+                    <td className="py-4 px-6 font-mono text-[10px] hidden md:table-cell">ID: {log.entity_id}</td>
+                    <td className="py-4 px-6 font-mono text-[10px] text-gray-400 hidden md:table-cell">
                       {log.ip_address || 'N/A'}
                     </td>
-                    <td className="py-4 px-6 text-gray-400 text-xs">
+                    <td className="py-4 px-6 text-gray-400 text-[10px]">
                       {log.created_at ? new Date(log.created_at).toLocaleString() : ''}
                     </td>
                   </tr>
