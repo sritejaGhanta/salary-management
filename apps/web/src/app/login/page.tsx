@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useAuth } from '../../context/auth.context';
 import { Eye, EyeOff, Loader2, Lock, Mail } from 'lucide-react';
+import Link from 'next/link';
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email address' }),
@@ -15,7 +16,7 @@ const loginSchema = z.object({
 type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
-  const { login } = useAuth();
+  const { login, user } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -140,6 +141,14 @@ export default function LoginPage() {
             )}
           </button>
         </form>
+
+        {user && user.role === 'admin' && (
+          <div className="text-center mt-6 pt-4 border-t border-gray-800">
+            <Link href="/register" className="text-sm text-blue-500 hover:text-blue-400 font-semibold transition">
+              Register New HR Account
+            </Link>
+          </div>
+        )}
       </div>
     </main>
   );
