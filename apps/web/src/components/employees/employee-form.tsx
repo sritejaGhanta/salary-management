@@ -9,16 +9,46 @@ import { Loader2, Save, Briefcase, MapPin, User, DollarSign } from 'lucide-react
 import Link from 'next/link';
 
 const employeeSchema = z.object({
-  full_name: z.string().min(2, { message: 'Full name must be at least 2 characters' }),
-  email: z.string().email({ message: 'Please enter a valid email address' }),
-  phone: z.string().optional(),
+  full_name: z.string()
+    .min(2, { message: 'Full name must be at least 2 characters' })
+    .max(150, { message: 'Full name cannot exceed 150 characters' })
+    .regex(/^[a-zA-Z\s.-]+$/, { message: 'Full name can only contain letters, spaces, dots, and hyphens' }),
+  email: z.string()
+    .min(1, { message: 'Email address is required' })
+    .email({ message: 'Please enter a valid email address' })
+    .max(100, { message: 'Email cannot exceed 100 characters' }),
+  phone: z.string().max(20, { message: 'Phone number cannot exceed 20 characters' }).optional().or(z.literal('')),
   job_title_id: z.coerce.number().min(1, { message: 'Job title is required' }),
   department_id: z.coerce.number().min(1, { message: 'Department is required' }),
   country_id: z.coerce.number().min(1, { message: 'Country is required' }),
-  state_id: z.coerce.number().optional(),
-  salary: z.coerce.number().min(0, { message: 'Salary must be a positive number' }),
-  currency: z.string().min(1, { message: 'Currency is required' }),
-  joining_date: z.string().min(1, { message: 'Joining date is required' }),
+  state_id: z.preprocess(
+    (val) => {
+      if (val === '' || val === null || val === undefined || Number(val) === 0 || isNaN(Number(val))) {
+        return undefined;
+      }
+      return Number(val);
+    },
+    z.number().optional()
+  ),
+  salary: z.coerce.number({ message: 'Salary must be a number' })
+    .min(0.01, { message: 'Salary must be greater than 0' })
+    .max(9999999999.99, { message: 'Salary cannot exceed 9,999,999,999.99' }),
+  currency: z.string()
+    .length(3, { message: 'Currency must be exactly 3 characters' })
+    .regex(/^[A-Za-z]{3}$/, { message: 'Currency must contain only letters' })
+    .transform((val) => val.toUpperCase()),
+  joining_date: z.string()
+    .min(1, { message: 'Joining date is required' })
+    .refine((val) => {
+      const date = new Date(val);
+      return !isNaN(date.getTime());
+    }, { message: 'Invalid date format' })
+    .refine((val) => {
+      const date = new Date(val);
+      const maxDate = new Date();
+      maxDate.setFullYear(maxDate.getFullYear() + 5);
+      return date <= maxDate;
+    }, { message: 'Joining date cannot be more than 5 years in the future' }),
   status: z.enum(['active', 'inactive']),
 });
 

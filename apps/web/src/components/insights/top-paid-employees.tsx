@@ -55,11 +55,24 @@ export default function TopPaidEmployees() {
   }, [selectedCountryId]);
 
   const formatCurrency = (val: number, currency = 'USD') => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency,
-      maximumFractionDigits: 0,
-    }).format(val);
+    try {
+      const code = (currency && currency.trim().length === 3) ? currency.trim().toUpperCase() : 'USD';
+      return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: code,
+        maximumFractionDigits: 0,
+      }).format(val);
+    } catch {
+      try {
+        return new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: 'USD',
+          maximumFractionDigits: 0,
+        }).format(val);
+      } catch {
+        return `$${val.toLocaleString('en-US')}`;
+      }
+    }
   };
 
   return (
