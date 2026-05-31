@@ -1,40 +1,41 @@
 
-$ next build
-  ▲ Next.js 14.2.35
+[2m$ next build[22m
+  [1m[38;2;173;127;168m▲ Next.js 14.2.35[39m[22m
   - Environments: .env.local
 
-   Creating an optimized production build ...
- ✓ Compiled successfully
-   Linting and checking validity of types     ✓ Linting and checking validity of types 
-   Collecting page data     ✓ Collecting page data 
- ✓ Generating static pages (15/15)
-   Collecting build traces     ✓ Collecting build traces 
-   Finalizing page optimization     ✓ Finalizing page optimization 
+ [37m[1m [22m[39m Creating an optimized production build ...
+ [32m[1m✓[22m[39m Compiled successfully
+[?25l [37m[1m [22m[39m Linting and checking validity of types  [36m.[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m..[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m...[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m.[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m..[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m...[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m.[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m..[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m...[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m.[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m..[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m...[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m.[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m..[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m...[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m.[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m..[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m...[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m.[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m..[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m...[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m.[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m..[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m...[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m.[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m..[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m...[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m.[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m..[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m...[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m.[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m..[39m[2K[1G[?25h [37m[1m [22m[39m Linting and checking validity of types     [32m[1m✓[22m[39m Linting and checking validity of types 
+[?25l [37m[1m [22m[39m Collecting page data  [36m.[39m[2K[1G [37m[1m [22m[39m Collecting page data  [36m..[39m[2K[1G [37m[1m [22m[39m Collecting page data  [36m...[39m[2K[1G [37m[1m [22m[39m Collecting page data  [36m.[39m[2K[1G[?25h [37m[1m [22m[39m Collecting page data     [32m[1m✓[22m[39m Collecting page data 
+[?25l [37m[1m [22m[39m Generating static pages (0/15)  [36m[    ][39m[2K[1G [37m[1m [22m[39m Generating static pages (0/15)  [36m[=   ][39m[2K[1G [37m[1m [22m[39m Generating static pages (14/15)  [36m[==  ][39m[2K[1G[?25h [32m[1m✓[22m[39m Generating static pages (15/15)
+[?25l [37m[1m [22m[39m Finalizing page optimization  [36m.[39m[?25l [37m[1m [22m[39m Collecting build traces  [36m.[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m..[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m..[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m...[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m...[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m.[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m.[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m..[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m..[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m...[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m...[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m.[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m.[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m..[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m..[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m...[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m...[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m.[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m.[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m..[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m..[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m...[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m...[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m.[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m.[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m..[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m..[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m...[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m...[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m.[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m.[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m..[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m..[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m...[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m...[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m.[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m.[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m..[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m..[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m...[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m...[39m[2K[1G[?25h [37m[1m [22m[39m Collecting build traces     [32m[1m✓[22m[39m Collecting build traces 
+[2K[1G[?25h [37m[1m [22m[39m Finalizing page optimization     [32m[1m✓[22m[39m Finalizing page optimization 
 
-Route (app)                              Size     First Load JS
-┌ ○ /                                    2.13 kB         113 kB
-├ ○ /_not-found                          875 B          88.4 kB
-├ ○ /audit-logs                          5.22 kB         116 kB
-├ ○ /dashboard                           3.01 kB         123 kB
-├ ○ /employees                           6.14 kB         126 kB
-├ ƒ /employees/[id]                      3.97 kB         124 kB
-├ ƒ /employees/[id]/edit                 1.97 kB         155 kB
-├ ○ /employees/new                       799 B           154 kB
-├ ○ /export                              3.41 kB         114 kB
-├ ○ /hr-managers                         5.08 kB         125 kB
-├ ƒ /hr-managers/[id]/edit               3.45 kB         123 kB
-├ ○ /insights                            110 kB          221 kB
-├ ○ /login                               2.98 kB         152 kB
-├ ○ /profile                             5.19 kB         145 kB
-└ ○ /register                            3.7 kB          153 kB
-+ First Load JS shared by all            87.5 kB
+[4mRoute (app)[24m                              [4mSize[24m     [4mFirst Load JS[24m
+┌ ○ /                                    2.13 kB         [37m[1m113 kB[22m[39m
+├ ○ /_not-found                          875 B          [37m[1m88.4 kB[22m[39m
+├ ○ /audit-logs                          5.22 kB         [37m[1m116 kB[22m[39m
+├ ○ /dashboard                           3.01 kB         [37m[1m123 kB[22m[39m
+├ ○ /employees                           6.14 kB         [37m[1m126 kB[22m[39m
+├ ƒ /employees/[id]                      3.97 kB         [37m[1m124 kB[22m[39m
+├ ƒ /employees/[id]/edit                 1.97 kB         [37m[1m155 kB[22m[39m
+├ ○ /employees/new                       799 B           [37m[1m154 kB[22m[39m
+├ ○ /export                              3.41 kB         [37m[1m114 kB[22m[39m
+├ ○ /hr-managers                         5.08 kB         [37m[1m125 kB[22m[39m
+├ ƒ /hr-managers/[id]/edit               3.45 kB         [37m[1m123 kB[22m[39m
+├ ○ /insights                            110 kB          [37m[1m221 kB[22m[39m
+├ ○ /login                               2.98 kB         [37m[1m152 kB[22m[39m
+├ ○ /profile                             5.19 kB         [37m[1m145 kB[22m[39m
+└ ○ /register                            3.7 kB          [37m[1m153 kB[22m[39m
++ First Load JS shared by all            [37m[1m87.5 kB[22m[39m
   ├ chunks/336-d3c0ef21c40f00bc.js       31.9 kB
   ├ chunks/7f7c90a3-de9f3317d8d381bb.js  53.6 kB
   └ other shared chunks (total)          1.96 kB
 
 
-ƒ Middleware                             26.6 kB
+ƒ Middleware                             [37m[1m26.6 kB[22m[39m
 
 ○  (Static)   prerendered as static content
 ƒ  (Dynamic)  server-rendered on demand
 
+[?25h

@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, Users, BarChart3, Download, ClipboardList, UserPlus, User, LogOut } from 'lucide-react';
+import { LayoutDashboard, Users, BarChart3, Download, ClipboardList, User, LogOut } from 'lucide-react';
 import { useAuth } from '../../context/auth.context';
 
 export default function Sidebar() {
@@ -20,7 +20,7 @@ export default function Sidebar() {
 
   if (user && user.role === 'admin') {
     links.push({ name: 'HR Managers', href: '/hr-managers', icon: Users });
-    links.push({ name: 'Register HR', href: '/register', icon: UserPlus });
+    // links.push({ name: 'Register HR', href: '/register', icon: UserPlus });
   }
 
   return (
