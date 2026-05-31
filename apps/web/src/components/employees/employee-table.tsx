@@ -96,14 +96,14 @@ export default function EmployeeTable({
 
   return (
     <div className="bg-[#161820] border border-gray-800 rounded-2xl overflow-hidden relative">
-      <div className="overflow-x-auto">
-        <table className="w-full text-left border-collapse">
+      <div className="overflow-x-auto w-full scrollbar-thin">
+        <table className="w-full text-left border-collapse min-w-[600px] md:min-w-full">
           <thead>
             <tr className="border-b border-gray-800 bg-[#12131a] text-gray-400">
               {employeeColumns.map((col) => (
                 <th
                   key={col.key}
-                  className={`py-4 px-5 text-[11px] font-semibold uppercase tracking-wider ${
+                  className={`py-4 px-5 text-[11px] font-semibold uppercase tracking-wider ${col.className || ''} ${
                     col.sortable ? 'cursor-pointer select-none group hover:text-white' : ''
                   }`}
                   onClick={() => col.sortable && onSort(col.key)}
@@ -136,10 +136,10 @@ export default function EmployeeTable({
               employees.map((emp) => (
                 <tr key={emp.id} className="hover:bg-[#1f222e]/40 transition text-gray-300 text-xs">
                   <td className="py-3.5 px-5 font-medium text-white">{emp.full_name}</td>
-                  <td className="py-3.5 px-5 text-gray-400">{emp.email}</td>
+                  <td className="py-3.5 px-5 text-gray-400 hidden md:table-cell">{emp.email}</td>
                   <td className="py-3.5 px-5">{emp.jobTitle?.title || '-'}</td>
-                  <td className="py-3.5 px-5">{emp.department?.name || '-'}</td>
-                  <td className="py-3.5 px-5">{emp.country?.country || '-'}</td>
+                  <td className="py-3.5 px-5 hidden md:table-cell">{emp.department?.name || '-'}</td>
+                  <td className="py-3.5 px-5 hidden md:table-cell">{emp.country?.country || '-'}</td>
                   <td className="py-3.5 px-5 font-mono text-emerald-400 font-semibold">
                     {formatCurrency(emp.salary, emp.currency)}
                   </td>
@@ -154,7 +154,7 @@ export default function EmployeeTable({
                       {emp.status}
                     </span>
                   </td>
-                  <td className="py-3.5 px-5 text-gray-400">{formatDate(emp.joining_date)}</td>
+                  <td className="py-3.5 px-5 text-gray-400 hidden lg:table-cell">{formatDate(emp.joining_date)}</td>
                   <td className="py-3.5 px-5">
                     <div className="flex items-center space-x-2.5">
                       <Link

@@ -301,8 +301,8 @@ export default function HRManagersPage() {
 
       {/* Data Table */}
       <div className="bg-[#161820] border border-gray-800 rounded-2xl overflow-hidden relative">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
+        <div className="overflow-x-auto w-full scrollbar-thin">
+          <table className="w-full text-left border-collapse min-w-[600px] md:min-w-full">
             <thead>
               <tr className="border-b border-gray-800 bg-[#12131a] text-gray-400">
                 <th
@@ -315,7 +315,7 @@ export default function HRManagersPage() {
                   </div>
                 </th>
                 <th
-                  className="py-4 px-5 text-[11px] font-semibold uppercase tracking-wider cursor-pointer select-none group hover:text-white"
+                  className="py-4 px-5 text-[11px] font-semibold uppercase tracking-wider cursor-pointer select-none group hover:text-white hidden md:table-cell"
                   onClick={() => handleSort('email')}
                 >
                   <div className="flex items-center">
@@ -342,7 +342,7 @@ export default function HRManagersPage() {
                   </div>
                 </th>
                 <th
-                  className="py-4 px-5 text-[11px] font-semibold uppercase tracking-wider cursor-pointer select-none group hover:text-white"
+                  className="py-4 px-5 text-[11px] font-semibold uppercase tracking-wider cursor-pointer select-none group hover:text-white hidden lg:table-cell"
                   onClick={() => handleSort('created_at')}
                 >
                   <div className="flex items-center">
@@ -375,7 +375,7 @@ export default function HRManagersPage() {
                 managers.map((mgr) => (
                   <tr key={mgr.id} className="hover:bg-[#1f222e]/40 transition text-gray-300 text-xs">
                     <td className="py-3.5 px-5 font-medium text-white">{mgr.full_name}</td>
-                    <td className="py-3.5 px-5 text-gray-400">{mgr.email}</td>
+                    <td className="py-3.5 px-5 text-gray-400 hidden md:table-cell">{mgr.email}</td>
                     <td className="py-3.5 px-5">
                       <span
                         className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-semibold tracking-wide ${
@@ -398,7 +398,7 @@ export default function HRManagersPage() {
                         {mgr.is_active ? 'Active' : 'Inactive'}
                       </span>
                     </td>
-                    <td className="py-3.5 px-5 text-gray-400">{formatDate(mgr.created_at)}</td>
+                    <td className="py-3.5 px-5 text-gray-400 hidden lg:table-cell">{formatDate(mgr.created_at)}</td>
                     <td className="py-3.5 px-5">
                       <div className="flex items-center space-x-2.5">
                         <Link

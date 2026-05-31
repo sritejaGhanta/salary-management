@@ -60,7 +60,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Grid of stats */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Total Employees */}
         <div className="bg-[#161820] border border-gray-800 rounded-2xl p-6 relative overflow-hidden group hover:border-blue-500/30 transition duration-200">
           <div className="flex items-center justify-between">
