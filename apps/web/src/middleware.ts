@@ -5,8 +5,8 @@ export function middleware(request: NextRequest) {
   const token = request.cookies.get('token')?.value;
   const { pathname } = request.nextUrl;
 
-  const protectedRoutes = ['/dashboard', '/employees', '/insights', '/export'];
-  const publicRoutes = ['/login', '/register'];
+  const protectedRoutes = ['/dashboard', '/employees', '/insights', '/export', '/register', '/hr-managers'];
+  const publicRoutes = ['/login'];
 
   const isProtected = protectedRoutes.some((route) => pathname === route || pathname.startsWith(route + '/'));
   const isPublic = publicRoutes.some((route) => pathname === route || pathname.startsWith(route + '/'));
@@ -30,5 +30,6 @@ export const config = {
     '/export/:path*',
     '/login',
     '/register',
+    '/hr-managers/:path*',
   ],
 };

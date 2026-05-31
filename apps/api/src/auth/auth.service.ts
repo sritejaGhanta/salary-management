@@ -6,6 +6,8 @@ import * as bcrypt from 'bcrypt';
 import { HRManager } from '../entities/hr-manager.entity';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
+import { UpdateProfileDto } from './dto/update-profile.dto';
+import { ChangePasswordDto } from './dto/change-password.dto';
 
 @Injectable()
 export class AuthService {
@@ -69,5 +71,35 @@ export class AuthService {
 
     const { password, ...result } = user;
     return result;
+  }
+
+  async updateProfile(userId: number, dto: UpdateProfileDto) {
+    const user = await this.hrManagerRepository.findOneBy({ id: userId });
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+
+    user.full_name = dto.full_name;
+    const savedUser = await this.hrManagerRepository.save(user);
+
+    const { password, ...result } = savedUser;
+    return result;
+  }
+
+  async changePassword(userId: number, dto: ChangePasswordDto) {
+    const user = await this.hrManagerRepository.findOneBy({ id: userId });
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+
+    const isPasswordValid = await bcrypt.compare(dto.currentPassword, user.password);
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('Invalid current password');
+    }
+
+    user.password = await bcrypt.hash(dto.newPassword, 12);
+    await this.hrManagerRepository.save(user);
+
+    return { message: 'Password changed successfully' };
   }
 }

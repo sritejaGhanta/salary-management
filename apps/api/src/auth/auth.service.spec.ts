@@ -156,4 +156,53 @@ describe('AuthService', () => {
       await expect(service.getMe(999)).rejects.toThrow(UnauthorizedException);
     });
   });
+
+  describe('updateProfile', () => {
+    it('should update full_name and return user without password', async () => {
+      const mockUser = { id: 1, full_name: 'Old Name', email: 'admin@salary.com', password: 'hashedPassword', role: 'admin' };
+      mockHRManagerRepository.findOneBy.mockResolvedValue(mockUser);
+      mockHRManagerRepository.save.mockImplementation(async (user) => user);
+
+      const result = await service.updateProfile(1, { full_name: 'New Name' });
+
+      expect(result).toEqual({ id: 1, full_name: 'New Name', email: 'admin@salary.com', role: 'admin' });
+      expect(result.password).toBeUndefined();
+    });
+
+    it('should throw UnauthorizedException when user not found', async () => {
+      mockHRManagerRepository.findOneBy.mockResolvedValue(null);
+      await expect(service.updateProfile(999, { full_name: 'New Name' })).rejects.toThrow(UnauthorizedException);
+    });
+  });
+
+  describe('changePassword', () => {
+    it('should change password when current password matches', async () => {
+      const mockUser = { id: 1, email: 'admin@salary.com', password: 'hashedPassword', role: 'admin' };
+      mockHRManagerRepository.findOneBy.mockResolvedValue(mockUser);
+      (bcrypt.compare as jest.Mock).mockResolvedValue(true);
+      (bcrypt.hash as jest.Mock).mockResolvedValue('newHashedPassword');
+      mockHRManagerRepository.save.mockResolvedValue(mockUser);
+
+      const result = await service.changePassword(1, { currentPassword: 'password123', newPassword: 'newPassword123' });
+
+      expect(result).toEqual({ message: 'Password changed successfully' });
+      expect(bcrypt.compare).toHaveBeenCalledWith('password123', 'hashedPassword');
+      expect(bcrypt.hash).toHaveBeenCalledWith('newPassword123', 12);
+    });
+
+    it('should throw UnauthorizedException when current password does not match', async () => {
+      const mockUser = { id: 1, email: 'admin@salary.com', password: 'hashedPassword', role: 'admin' };
+      mockHRManagerRepository.findOneBy.mockResolvedValue(mockUser);
+      (bcrypt.compare as jest.Mock).mockResolvedValue(false);
+
+      await expect(service.changePassword(1, { currentPassword: 'wrongPassword', newPassword: 'newPassword123' }))
+        .rejects.toThrow(UnauthorizedException);
+    });
+
+    it('should throw UnauthorizedException when user not found', async () => {
+      mockHRManagerRepository.findOneBy.mockResolvedValue(null);
+      await expect(service.changePassword(999, { currentPassword: 'password123', newPassword: 'newPassword123' }))
+        .rejects.toThrow(UnauthorizedException);
+    });
+  });
 });

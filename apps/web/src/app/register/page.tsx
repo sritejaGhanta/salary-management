@@ -62,8 +62,11 @@ export default function RegisterPage() {
     setIsSubmitting(true);
     try {
       await api.post('/auth/register', data);
-      setSuccessMsg(`HR Manager account for ${data.full_name} created successfully!`);
+      setSuccessMsg(`HR Manager account for ${data.full_name} created successfully! Redirecting...`);
       reset();
+      setTimeout(() => {
+        router.push('/dashboard');
+      }, 2000);
     } catch (err: unknown) {
       console.error(err);
       if (err && typeof err === 'object' && 'response' in err) {

@@ -3,6 +3,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { BullModule } from '@nestjs/bull';
 import { AuditLog } from '../entities/audit-log.entity';
 import { AuditProcessor } from './audit.processor';
+import { AuditService } from './audit.service';
+import { AuditController } from './audit.controller';
 
 @Module({
   imports: [
@@ -11,7 +13,8 @@ import { AuditProcessor } from './audit.processor';
       name: 'audit',
     }),
   ],
-  providers: [AuditProcessor],
-  exports: [BullModule],
+  controllers: [AuditController],
+  providers: [AuditProcessor, AuditService],
+  exports: [BullModule, AuditService],
 })
 export class AuditModule {}
