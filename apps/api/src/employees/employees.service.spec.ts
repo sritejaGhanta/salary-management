@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { getQueueToken } from '@nestjs/bull';
-import { NotFoundException } from '@nestjs/common';
+import { NotFoundException, ConflictException } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
 import { Employee } from '../entities/employee.entity';
 import { SalaryHistory } from '../entities/salary-history.entity';
@@ -190,7 +190,12 @@ describe('EmployeesService', () => {
       const mockCreated = { ...createDto, joining_date: new Date('2026-01-01'), added_by: 2, status: 'active' };
       mockEmployeeRepository.create.mockReturnValue(mockCreated);
       mockEmployeeRepository.save.mockResolvedValue({ id: 5, ...mockCreated });
-      mockEmployeeRepository.findOne.mockResolvedValue({ id: 5, ...mockCreated });
+      mockEmployeeRepository.findOne.mockImplementation(async (options) => {
+        if (options && options.where && (options.where.email === createDto.email)) {
+          return null;
+        }
+        return { id: 5, ...mockCreated };
+      });
 
       const result = await service.create(createDto, currentUser);
 
@@ -207,7 +212,12 @@ describe('EmployeesService', () => {
       const mockCreated = { id: 5, ...createDto, joining_date: new Date('2026-01-01'), added_by: 2, status: 'active' };
       mockEmployeeRepository.create.mockReturnValue(mockCreated);
       mockEmployeeRepository.save.mockResolvedValue(mockCreated);
-      mockEmployeeRepository.findOne.mockResolvedValue(mockCreated);
+      mockEmployeeRepository.findOne.mockImplementation(async (options) => {
+        if (options && options.where && (options.where.email === createDto.email)) {
+          return null;
+        }
+        return mockCreated;
+      });
 
       await service.create(createDto, currentUser, '127.0.0.1');
 
@@ -220,6 +230,12 @@ describe('EmployeesService', () => {
         new_data: mockCreated,
         ip_address: '127.0.0.1',
       });
+    });
+
+    it('should throw ConflictException if duplicate email exists on create', async () => {
+      mockEmployeeRepository.findOne.mockResolvedValue({ id: 99 });
+      await expect(service.create(createDto, currentUser))
+        .rejects.toThrow(ConflictException);
     });
   });
 
@@ -279,6 +295,14 @@ describe('EmployeesService', () => {
         new_data: { ...existingEmployee, ...updateDto },
         ip_address: '192.168.1.1',
       });
+    });
+
+    it('should throw ConflictException if duplicate email exists on update', async () => {
+      mockEmployeeRepository.findOne
+        .mockResolvedValueOnce({ ...existingEmployee, email: 'original@salary.com' })
+        .mockResolvedValueOnce({ id: 10 }); // duplicate email found
+      await expect(service.update(5, { email: 'duplicate@salary.com' }, currentUser))
+        .rejects.toThrow(ConflictException);
     });
   });
 

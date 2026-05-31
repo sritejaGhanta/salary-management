@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { InjectQueue } from '@nestjs/bull';
@@ -142,6 +142,11 @@ export class EmployeesService {
   }
 
   async create(dto: CreateEmployeeDto, currentUser: any, ip?: string) {
+    const existing = await this.employeeRepository.findOne({ where: { email: dto.email } });
+    if (existing) {
+      throw new ConflictException(`Employee with email ${dto.email} already exists`);
+    }
+
     const employee = this.employeeRepository.create({
       ...dto,
       joining_date: new Date(dto.joining_date),
@@ -166,6 +171,13 @@ export class EmployeesService {
 
   async update(id: number, dto: UpdateEmployeeDto, currentUser: any, ip?: string) {
     const existingEmployee = await this.findOne(id); // Throws NotFoundException if not found
+
+    if (dto.email && dto.email !== existingEmployee.email) {
+      const existing = await this.employeeRepository.findOne({ where: { email: dto.email } });
+      if (existing) {
+        throw new ConflictException(`Employee with email ${dto.email} already exists`);
+      }
+    }
 
     // If salary changed, save to salary history
     if (dto.salary !== undefined && Number(dto.salary) !== Number(existingEmployee.salary)) {
