@@ -6,7 +6,13 @@
     "dev": "turbo run dev",
     "build": "turbo run build",
     "test": "turbo run test",
-    "lint": "turbo run lint"
+    "lint": "turbo run lint",
+    "env:setup": "cp .env apps/api/.env && cp .env apps/web/.env",
+    "migration:run": "pnpm --filter api migration:run",
+    "migration:revert": "pnpm --filter api migration:revert",
+    "seed": "pnpm --filter api seed",
+    "seed:admin": "pnpm --filter api seed:admin",
+    "seed:employees": "pnpm --filter api seed:employees"
   },
   "devDependencies": {
     "@types/node": "^25.9.1",

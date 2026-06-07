@@ -22,15 +22,18 @@ A full-stack HR Salary Management System built for 10,000+ employees.
 
 ## Quick Start
 ```bash
-# Install dependencies
+# Setup environment
+cp .env.example .env
+# Edit the root .env with your DB/Redis credentials
+
+# Copy environment configurations to both backend/frontend
+pnpm env:setup
+
+# Install dependencies (automatically handles build approvals)
 pnpm install
 
-# Setup environment
-cp .env.example apps/api/.env
-# Edit apps/api/.env with your DB credentials
-
-# Run migrations
-cd apps/api && pnpm migration:run
+# Run database migrations
+pnpm migration:run
 
 # Seed master data
 pnpm seed
@@ -67,6 +70,7 @@ salary-management/
 pnpm dev              # Start both apps
 pnpm build            # Build all
 pnpm test             # Run tests
+pnpm env:setup        # Copy environment variables from root .env to sub-apps
 pnpm migration:run    # Run DB migrations
 pnpm seed             # Seed master data
 pnpm seed:admin       # Seed admin user
